@@ -8,6 +8,9 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6],
                  [2, 5, 8], [3, 6, 9],
                  [1, 5, 9], [3, 5, 7]].freeze
 
+computer_score = 0
+player_score = 0
+
 def prompt(msg)
   puts "=> #{msg}"
 end
@@ -39,7 +42,7 @@ def initialize_board
 end
 
 def empty_squares(brd)
-  brd.keys.select { |num| brd[num] == INITIAL_MARKER }
+  empty_arr = brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
 def player_places_piece!(brd)
@@ -94,6 +97,9 @@ loop do
 
   if winner?(board)
     prompt "#{detect_winner(board)} won!"
+    player_score += 1 if detect_winner(board) == "Player"
+    computer_score += 1 if detect_winner(board) == "Computer"
+    prompt "The score is: Player: #{player_score} Computer: #{computer_score}"
   else
     prompt "The game has ended in a tie!"
   end
